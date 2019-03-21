@@ -1,10 +1,6 @@
 # coding: utf-8
 # Algoritmo de Bresenham
 
-"""
-ponto = {'x': xvalue, 'y': yvalue}
-"""
-
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -16,7 +12,7 @@ def prtab(tab):
 
 
 def calcAngular(p1: Point, p2: Point):
-    return (p2.x - p1.x) / (p2.y - p1.y)
+    return (p2.y - p1.y) / (p2.x - p1.x) 
 
 
 def reflexao(p1: Point, p2: Point):
@@ -53,14 +49,15 @@ def reflexaoInv(points: list, trocaxy, trocax, trocay):
 def plot(tab, p: Point):
     tab[p.x][p.y] = 1
 
+
 def bresenham(malha, p1: Point, p2: Point):
-    (p1, p2, trocaxy, trocax, trocay) = reflexao(p1, p2)
     x = p1.x
     y = p1.y
     init_point = Point(x, y)
     m = calcAngular(p1, p2)
     e = m - 0.5
     plot(malha, init_point)
+    (p1, p2, trocaxy, trocax, trocay) = reflexao(p1, p2)
     p = []
     while x < p2.x:
         if e >= 0:
@@ -75,11 +72,17 @@ def bresenham(malha, p1: Point, p2: Point):
         plot(malha, point)
     return p
 
-order = int(input('Digite a ordem da malha de desenho: '))
+
+def transpose(tab):
+    pass
+
+
+# order = int(input('Digite a ordem da malha de desenho: '))
+order = 5
 malha = [[0 for i in range(order)] for i in range(order)]
 prtab(malha)
 p1 = Point(0, 0)
-p2 = Point(2, 3)
+p2 = Point(3, 2)
 bresenham(malha, p1, p2)
 print()
 prtab(malha)
