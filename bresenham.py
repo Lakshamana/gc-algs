@@ -12,13 +12,13 @@ def prtab(tab):
 
 
 def calcAngular(p1: Point, p2: Point):
-    return (p2.y - p1.y) / (p2.x - p1.x) 
+    return round((p2.y - p1.y) / (p2.x - p1.x), 1)
 
 
 def reflexao(p1: Point, p2: Point):
-    m = calcAngular(p1, p2)
     trocaxy = trocax = trocay = False
-    if m > 1 or m < -1:
+    angular = calcAngular(p1, p2)
+    if angular > 1 or angular < -1:
         p1.x, p1.y = p1.y, p1.x
         p2.x, p2.y = p2.y, p2.x
         trocaxy = True
@@ -54,10 +54,10 @@ def bresenham(malha, p1: Point, p2: Point):
     x = p1.x
     y = p1.y
     init_point = Point(x, y)
+    (p1, p2, trocaxy, trocax, trocay) = reflexao(p1, p2)
     m = calcAngular(p1, p2)
     e = m - 0.5
     plot(malha, init_point)
-    (p1, p2, trocaxy, trocax, trocay) = reflexao(p1, p2)
     p = []
     while x < p2.x:
         if e >= 0:
@@ -67,22 +67,24 @@ def bresenham(malha, p1: Point, p2: Point):
         e += m
         new_point = Point(x, y)
         p.append(new_point)
-    p = reflexaoInv(p, trocaxy, trocax, trocay)
-    for point in p: 
+    reflected = reflexaoInv(p, trocaxy, trocax, trocay)
+    for point in reflected: 
         plot(malha, point)
-    return p
 
 
 def transpose(tab):
-    pass
-
+    mtx = list(zip(*tab))
+    newtab = []
+    for i in mtx: 
+        newtab.append([*i])
+    return newtab
 
 # order = int(input('Digite a ordem da malha de desenho: '))
-order = 5
-malha = [[0 for i in range(order)] for i in range(order)]
-prtab(malha)
+order = 9
+malha = [[0 for i in range(order + 1)] for i in range(order + 1)]
+prtab(transpose(malha))
 p1 = Point(0, 0)
-p2 = Point(3, 2)
+p2 = Point(3, 7)
 bresenham(malha, p1, p2)
 print()
-prtab(malha)
+prtab(transpose(malha))
