@@ -14,7 +14,7 @@ def prtab(tab):
 def calcAngular(p1: Point, p2: Point):
     dx = (p2.x - p1.x)
     dy = (p2.y - p1.y)
-    return dy / dx if dx != 0 else 1
+    return dy / dx if dx != 0 else dy - 2 * dx
 
 
 def reflexao(p1: Point, p2: Point):
